@@ -1,2 +1,2 @@
-# 143_lab_reports
-Code supporting EE143 Lab Reports
+# EE143 Lab Reports
+Code supporting EE143 Lab Reports, Fall 2018.
