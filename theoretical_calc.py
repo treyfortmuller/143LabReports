@@ -58,8 +58,12 @@ from scipy import special # for the complimentary error function
 
 # AFTER PRE-DIFFUSION PLOT
 plt.figure(4)
-plt.title("AFTER PRE-DIFFUSION")
-x = np.linspace(1e-5, 10e-5, 10000) # centimeters
+plt.title("Dopant Distributions After Pre-diffusion")
+plt.xlabel("Wafer Depth ($cm$)")
+plt.ylabel("Dopant Concentration (atoms/$cm^2$)")
+plt.ylim(1e-40, 10e25)
+plt.xlim(2e-5, 3.5e-5)
+x = np.linspace(1e-5, 5e-5, 10000) # centimeters
 
 # the phosphorus distribution
 No = 1.25e21 # solid solubility limited phosphorous concentration
@@ -67,37 +71,40 @@ D = 9.207e-14 # diffusion coefficient
 t = 0.17 # hours
 C = 1.0/(2*np.sqrt(D*t))
 phosphorous = No*special.erfc(C*(x-2.638e-5))
-plt.loglog(x, phosphorous)
+plt.loglog(x, phosphorous, label='phosphorous distribution')
 
 # the gate oxide depth
 oxide_depth = 2.638e-5
-plt.axvline(x=oxide_depth)
+plt.axvline(x=oxide_depth, color='g', label='oxide interface')
 
 # the boron distribution after pre-diffusion
 Q = 6e12 # total dose from the pre-diffusion step above
 Dt = 2.379e-13
 Rp = 2e-5
 boron = (Q / np.sqrt(np.pi*Dt))*np.exp(-((x - Rp) / (2*np.sqrt(Dt)))**2)
-plt.loglog(x, boron)
+plt.loglog(x, boron, label='boron distribution')
 
 # the intersection points of the dopants
 dopant_intersect_x = np.argwhere(np.diff(np.sign(phosphorous - boron))).flatten()
 plt.plot(x[dopant_intersect_x], phosphorous[dopant_intersect_x], 'ro')
 
-# print the junction depth
-print("intersection depth after pre-diffusion: " + str(x[dopant_intersect_x]))
+# # print the junction depth
+# print("intersection depth after pre-diffusion: " + str(x[dopant_intersect_x]))
 
-# surface concentration of phosphorus
-surface_conc = No*special.erfc(C*(oxide_depth-2.638e-5))
-print("surface concentration is: "+ str(surface_conc))
+# # surface concentration of phosphorus
+# surface_conc = No*special.erfc(C*(oxide_depth-2.638e-5))
+# print("surface concentration is: "+ str(surface_conc))
 
-plt.show()
+plt.legend()
+plt.grid(True,which="major",ls="-")
 
 
 
 # AFTER DRIVE-IN PLOT
 plt.figure(5)
-plt.title("AFTER DRIVE-IN")
+plt.title("Dopant Distributions After Drive-in")
+plt.xlabel("Wafer Depth ($cm$)")
+plt.ylabel("Dopant Concentration (atoms/$cm^2$)")
 x = np.linspace(1e-5, 10e-5, 10000)
 
 # the phosphorus distribution
@@ -105,29 +112,34 @@ Q = 1.765e14 # total dose from the pre-diffusion step above
 D = 9.207e-14 # diffusion coefficient
 t = 0.79 # hours, both the wet oxidation and anneal time
 phosphorous = (Q / np.sqrt(np.pi*D*t))*np.exp(-((x-3.471e-5) / (2*np.sqrt(D*t)))**2)
-plt.plot(x, phosphorous)
+plt.plot(x, phosphorous, label='phosphorous distribution')
 
 # the gate oxide depth
 oxide_depth = 3.471e-5
-plt.axvline(x=oxide_depth)
+plt.axvline(x=oxide_depth, color='g', label='oxide interface')
+plt.axvline(x=2.638e-5, color='k', linestyle='--', label='previous interface') # old oxide depth
+
 
 # the boron distribution after pre-diffusion
 Q = 6e12 # total dose from the pre-diffusion step above
 Dt = 2.949e-13
 Rp = 2e-5
 boron = (Q / np.sqrt(np.pi*Dt))*np.exp(-((x - Rp) / (2*np.sqrt(Dt)))**2)
-plt.loglog(x, boron)
+plt.loglog(x, boron, label='boron distribution')
 
 # the intersection points of the dopants
 dopant_intersect_x = np.argwhere(np.diff(np.sign(phosphorous - boron)))
 plt.plot(x[dopant_intersect_x], phosphorous[dopant_intersect_x], 'ro')
 
-# print the junction depth
-print("intersection depth after drive-in: " + str(x[dopant_intersect_x]))
+# # print the junction depth
+# print("intersection depth after drive-in: " + str(x[dopant_intersect_x]))
 
-# surface concentration of phosphorus
-surface_conc = (Q / np.sqrt(np.pi*D*t))*np.exp(-((3.471e-5-3.471e-5) / (2*np.sqrt(D*t)))**2)
-print("surface concentration is: "+ str(surface_conc))
+# # surface concentration of phosphorus
+# surface_conc = (Q / np.sqrt(np.pi*D*t))*np.exp(-((3.471e-5-3.471e-5) / (2*np.sqrt(D*t)))**2)
+# print("surface concentration is: "+ str(surface_conc))
+
+plt.legend()
+plt.grid(True,which="major",ls="-")
 
 
 plt.show()
