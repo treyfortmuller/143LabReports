@@ -6,21 +6,6 @@ import matplotlib.pyplot as plt
 from scipy import special # for the complimentary error function
 # import models # custom script with theoretical models regarding processing physics
 
-# # INITIAL ION IMPLANTATION DISTRIBUTION
-# x = np.linspace(0, 4e-5, 100)
-
-# # add units here
-# Np = 4.35e17
-# delta_Rp = 5.5e-6
-# Rp = 2e-5
-
-# plt.figure(1)
-# plt.plot(x, Np * np.exp((-(x-delta_Rp)**2)/(2*delta_Rp**2)))
-
-# plt.title("Initial Ion Implantation Distribution")
-# plt.xlabel("Wafer Depth")
-# plt.ylabel("Ion Implantation Concentration")
-
 
 
 # # PHOSPHORUS AFTER PRE-DIFFUSION
@@ -111,7 +96,7 @@ x = np.linspace(1e-5, 10e-5, 10000)
 Q = 1.765e14 # total dose from the pre-diffusion step above
 D = 9.207e-14 # diffusion coefficient
 t = 0.79 # hours, both the wet oxidation and anneal time
-phosphorous = (Q / np.sqrt(np.pi*D*t))*np.exp(-((x-3.471e-5) / (2*np.sqrt(D*t)))**2)
+phosphorous = (Q / np.sqrt(np.pi*D*t))*np.exp(-((x-2.638e-5) / (2*np.sqrt(D*t)))**2)
 plt.plot(x, phosphorous, label='phosphorous distribution')
 
 # the gate oxide depth
