@@ -206,5 +206,10 @@ phosphorous = (Q / np.sqrt(np.pi*D*t))*np.exp(-((x-3.471e-5) / (2*np.sqrt(D*t)))
 plt.plot(x, phosphorous, label='phosphorous distribution 3')
 plt.legend()
 
+print(.46*oxides_sum[2])
+print(ion_implantation(Dt_subsequent_sums[5], 3.4707e-05))
+print((Q / np.sqrt(np.pi*D*t))*np.exp(-((3.471e-5-3.471e-5) / (2*np.sqrt(D*t)))**2))
+
+
 plt.show()
 
